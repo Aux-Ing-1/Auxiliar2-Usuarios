@@ -41,6 +41,9 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
     
         
     ```
+    >Importante! La clase User tiene que ser la primera clase que aparezca en el modelo. 
+    
+    
     Antes de hacer las migraciones tenemos que hacer un paso más. Vamos a ir a todoapp/settings.py y agregaremos esta línea: 
     
     `AUTH_USER_MODEL = 'todolist.User'`
