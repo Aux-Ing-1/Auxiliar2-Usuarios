@@ -3,11 +3,10 @@
 >Leer antes de empezar!
 >
 >Hoy crearemos un sistema de usuarios y para esto tendremos que comenzar la base de datos desde 0. 
->Si vas a usar el proyecto de la aux anterior tendrás que borrar los archivos que están dentro de la carpeta todolist/migrations menos el archivo `__init__.py` y borrar el archivo `db.sqlite3` de la carpeta principal. 
->Si vas a usar este repositorio (que trae el proyecto de la aux anterior), no hagas `python manage.py makemigrations` hasta que el tutorial lo indique! 
+>Si vas a usar el proyecto de la aux anterior tutorial tendrás que borrar los archivos que están dentro de la carpeta todolist/migrations y solo dejar el archivo `__init__.py` y el archivo `db.sqlite3`. 
+>Si vas a clonar este repositorio (que trae el proyecto de la aux anterior), no hagas `python manage.py makemigrations` hasta que el tutorial lo indique! 
 
-> También recuerda que si vas a usar este repositorio tienes que seguir las instrucciones de la auxiliar 1 para hacer Fork y luego clonar el repositorio, y puedes seguir las instrucciones de como correr tu app de Django. 
-
+> También recuerda que si vas a clonar este repositorio tienes que seguir las instrucciones de la auxiliar 1 para correr tu app de Django. 
 ## Librería Auth
 Django posee su propio sistema de usuarios, el cual esta incluido en la [librería Auth](https://docs.djangoproject.com/en/2.2/topics/auth/). 
 Un usuario está representado por un objeto de la clase User y sus atributos principales son:
@@ -22,7 +21,7 @@ Un usuario está representado por un objeto de la clase User y sus atributos pri
 Hoy vamos a agegarle usuarios a nuestra app de Todo List para que cada uno tenga su propia lista de tareas.
 Para esto tendremos que __crear usuarios__, __loguearlos__ y __asignarle un usuario a cada tarea__!
 
-![Pantallazo del resultado final de la app](vista_final.png)
+[!Pantallazo del resultado final de la app](vista_final.png)
 
 ## Actividad
 ### [Parte 1: Crear usuarios]
@@ -107,7 +106,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
                  
                 <div class="form-group">
                     <label for="mail">Mail</label>
-                    <input type="email" class="form-control" id="mail" name="email" required>
+                    <input type="email" class="form-control" id="mail" name="mail" required>
                 </div>
                 <button type="submit">Crear usuario</button>
            </form>
@@ -124,7 +123,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
    
    ![Vista registro](vista-registro.png)
    
-   > ¿Qué pasa si intentamos crear un usuario? Nada, porque no le hemos dado instrucciones a la app para registrar el usuario. 
+   > ¿Qué pasa si intentamos crear un usuario? Error, porque no le hemos dado instrucciones a la app para registrar el usuario. 
    
 3. __Guardar datos del formulario__:
    
@@ -143,7 +142,6 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
             apodo = request.POST['apodo']
             mail = request.POST['mail']
             user = User.objects.create_user(username=nombre, password=contraseña,email=mail,apodo=apodo)
-            messages.success(request, 'Se creó el usuario para ' + user.apodo + '!')
             return HttpResponseRedirect('/')
      
    ```
@@ -160,14 +158,14 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
    
    > Atención: En el formulario de registro le pusimos un _name_ a cada ```<input>``` y con ese name podemos acceder a los datos en ```request.POST```.
    
-   Prueba que el formulario esté funcionando y agrega cuentas. 
-   Para comprobar que se crearon puedes hacer lo siguiente: 
-   * Editar todolist/admin.py y agegar ```admin.site.register(models.User)``` .
-   
-   * Crea un superusuario haciendo ```python manage.py createsuperuser```. 
-   
-   * Luego ingresa a 127.0.0.1/admin y deberías poder ver todos los Users que has creado! 
-   ![vista admin con my_user](vista_myuser_admin.png)
+ 4. __Prueba que el formulario esté funcionando__ y agrega cuentas. 
+       Para comprobar que se crearon puedes hacer lo siguiente: 
+       * Editar todolist/admin.py y agegar ```admin.site.register(models.User)``` .
+       
+       * Crea un superusuario haciendo ```python manage.py createsuperuser```. 
+       
+       * Luego ingresa a 127.0.0.1/admin y deberías poder ver todos los Users que has creado! 
+       ![vista admin con my_user](vista_myuser_admin.png)
 
  4. __[Bonus track]__ Agregar un mensaje al crear el usuario. 
  
@@ -214,10 +212,10 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
 ### [Parte 2: Login y logout]
 Un login es un formulario donde los usuarios inician sesión.
 Mientras que logout es un botón o link por el cual los usuarios cierran sesión.
-Es importante que el login solo sea visible cuando los usuarios no han iniciado sesión, en caso de que ya han iniciado sesión deber ver un link para cerrar sesión (logout).
+Es importante que el login solo sea visible cuando los usuarios no han iniciado sesión y en caso de que ya haya iniciado sesión, deber ver un link para cerrar sesión (logout).
 
-Como el usuario que implementamos hereda de AbstractUser, la autenticación será muy fácil de implementar en nuestro proyecto. 
-De hecho, antes de implementar cualquier cosa, podremos ver en nuestro código si un usuario ya inició sesión o no. 
+Como el modelo User que implementamos hereda de AbstractUser, la autenticación será muy fácil de implementar en nuestro proyecto. 
+De hecho, antes de implementar cualquier cosa, nuestro proyecto ya tiene una variable user en los templates y en views tenemos request.user. 
 
 > ¿Cómo saber si una sesión está aciva? 
 > 
@@ -255,6 +253,7 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
     
      En el código anterior estamos revisando si el usuario que está viendo la página ya hizo login y 
      si lo hizo entonces le mostramos la opción de logout. En cambio si no ha hecho login, le daremos la opción de hacer login o registrarse. 
+     La opción de registrarse ya tiene un href porque ya implementamos el registro de usuarios en el paso anterior. 
 
 2. __Login__:
     Para hacer login tendremos una url especial para esto (/login). El formulario de login será igual que los que creamos antes, pero solo pediremos nombre y contraseña. 
@@ -443,7 +442,14 @@ Finalmente vamos a modificar la view donde se cargan las Tasks para mostrar sola
    En esta variación estamos revisando si el usuario inició sesión o no, con user.is_autenticated.
    Si el usuario inició sesión, entonces se filtrarán las Tasks tal que el owner sea ese usuario. 
    En caso contrario, se buscarán las Tasks tal que el owner sea None.  
-
+   
+   
+### Conclusiones
+Si iniciamos sesión solo veremos las Tasks que se crearon con nuestro usuario. En caso contrario veremos las Tasks que agregamos antes de iniciar sesión. 
+   ![Vista final logueada](vista_final_logueada.png)
+   
+Si no iniciamos sesión, solo veremos Tasks que se crearon anónimamente. 
+    ![Vista final sin loguear](vista_final.png)
 
 > Gracias a esta implementación de usuarios, la autenticación es muy fácil y muy parecida en todas las apps de Django.
 
@@ -456,5 +462,5 @@ Finalmente vamos a modificar la view donde se cargan las Tasks para mostrar sola
 >![Mili](mili.jpeg)
 >
 >
-
+>
 > La base de este código fue sacada de [Este tutorial](https://medium.com/fbdevclagos/how-to-build-a-todo-app-with-django-17afdc4a8f8c)
