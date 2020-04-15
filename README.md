@@ -132,6 +132,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
    
    Para esto vamos a editar todolist/views.py y diferenciar estos dos casos: 
    ```python
+   from django.http import HttpResponseRedirect
     def register_user(request):
         if request.method == 'GET':
             return render(request,"todolist/register_user.html")
