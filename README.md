@@ -318,6 +318,7 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
    
    views.py 
    ```python
+   from django.contrib.auth import authenticate, login,logout
    def login_user(request):
        if request.method == 'GET':
            return render(request,"todolist/login.html")
@@ -358,7 +359,7 @@ Para lograr esto crearemos una url y una view que hará logout y luego redirigir
    Solo tendremos que llamar al método logout() y ya se habrá cerrado la sesión del usuario. 
    
    ```python
-    from django.contrib.auth import logout
+    
     def logout_user(request):
        logout(request)
        return HttpResponseRedirect('/')
