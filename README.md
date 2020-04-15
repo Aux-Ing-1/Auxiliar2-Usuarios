@@ -428,7 +428,7 @@ Finalmente vamos a modificar la view donde se cargan las Tasks para mostrar sola
 3. __Modificar la carga de Tasks en views.py__: En el método index() de views.py creamos la variable `todos` que tomará todas las Tasks que luego mostraremos en el template. 
     Ahora, no queremos mostrar todas las Tasks sino que sólo las que pertenezcan al usuario. 
     
-    Para esto tendremos que cambiar la _querie_ que haremos para cargar las Tasks. En el método index de views.py: 
+    Para esto tendremos que cambiar la _query_ que haremos para cargar las Tasks. En el método index de views.py: 
     
     ```python
     def index(request): #the index view
