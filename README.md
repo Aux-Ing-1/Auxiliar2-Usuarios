@@ -21,7 +21,7 @@ Un usuario está representado por un objeto de la clase User y sus atributos pri
 Hoy vamos a agegarle usuarios a nuestra app de Todo List para que cada uno tenga su propia lista de tareas.
 Para esto tendremos que __crear usuarios__, __loguearlos__ y __asignarle un usuario a cada tarea__!
 
-[!Pantallazo del resultado final de la app]()
+[!Pantallazo del resultado final de la app](vista_final.png)
 
 ## Actividad
 ### [Parte 1: Crear usuarios]
