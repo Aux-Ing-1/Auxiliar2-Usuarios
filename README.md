@@ -56,7 +56,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
     >para que los cambios en el modelo se reflejen en la base de datos. 
 
 2. __Formulario de registro de usuarios__:
- Para crear un  nuevo usuario crearemos una nueva url que será /register. Al entrar a esta url habrá un formulario que luego de llenarlo correctamente nos llevará a la página de inicio de la app. 
+ Para crear un  nuevo usuario crearemos una nueva url que será /register. Al entrar a esta url habrá un formulario que luego de llenarlo correctamente creará un nuevo User y nos llevará a la página de inicio de la app. 
     
     2.1 __Urls__
      
