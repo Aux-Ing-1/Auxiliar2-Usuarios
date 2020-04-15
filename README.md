@@ -32,7 +32,7 @@ Es por esto que vamos a crear nuestra propia clase User que heredará de Abstrac
 AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Django y está diseñada para cuando queremos agregar mas información a los usuarios. 
 
 
-1. __Crear modelo User__: en todolist/models.py agregaremos el modelo User que heredará de AbstractUser y le pondremos el atributo apodo, para tener mas información sobre el usuario. 
+1. __Crear modelo User__: en todolist/models.py agregaremos el modelo User que heredará de AbstractUser y le pondremos el atributo apodo, para tener mas información sobre el usuario. Al hacer esto vamos tener acceso a los atributos base de User de Django y toda la funcionalidad para Autenticación. 
 
     ```python
    from django.contrib.auth.models import AbstractUser
