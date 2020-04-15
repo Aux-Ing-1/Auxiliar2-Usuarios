@@ -455,3 +455,5 @@ Finalmente vamos a modificar la view donde se cargan las Tasks para mostrar sola
 >![Mili](mili.jpeg)
 >
 >
+
+> La base de este código fue sacada de [Este tutorial](https://medium.com/fbdevclagos/how-to-build-a-todo-app-with-django-17afdc4a8f8c)
