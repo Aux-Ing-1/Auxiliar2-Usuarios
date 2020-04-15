@@ -456,6 +456,8 @@ Si no iniciamos sesión, solo veremos Tasks que se crearon anónimamente.
 > Es importante usar implementaciones de autenticación que vengan pre-hechas ya que así disminuye la posibilidad de tener problemas de seguridad. 
 > Si se fijaron nunca tuvimos que preocuparnos de guardar contraseñas de forma segura porque eso lo hace la librería Auth. 
 
+> La app se ve en blanco y negro y sin estilo porque no hemos hecho nada relacionado con CSS, la próxima semana les puedo explicar como funciona CSS y cómo dejar bonitas sus apps. 
+
 > Por si les da curiosidad la usuaria que aparece en las imágenes, el nombre está inspirado en [Mileva Marić](https://es.wikipedia.org/wiki/Mileva_Mari%C4%87), 
 >y la usuaria está inspirada en mi hermana Mileva.
 >
