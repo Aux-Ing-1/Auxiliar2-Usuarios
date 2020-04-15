@@ -3,10 +3,11 @@
 >Leer antes de empezar!
 >
 >Hoy crearemos un sistema de usuarios y para esto tendremos que comenzar la base de datos desde 0. 
->Si vas a usar el proyecto de la aux anterior tutorial tendrás que borrar los archivos que están dentro de la carpeta todolist/migrations y solo dejar el archivo `__init__.py` y el archivo `db.sqlite3`. 
->Si vas a user este repositorio (que trae el proyecto de la aux anterior), no hagas `python manage.py makemigrations` hasta que el tutorial lo indique! 
+>Si vas a usar el proyecto de la aux anterior tendrás que borrar los archivos que están dentro de la carpeta todolist/migrations menos el archivo `__init__.py` y borrar el archivo `db.sqlite3` de la carpeta principal. 
+>Si vas a usar este repositorio (que trae el proyecto de la aux anterior), no hagas `python manage.py makemigrations` hasta que el tutorial lo indique! 
 
-> También recuerda que si vas a user este repositorio tienes que seguir las instrucciones de la auxiliar 1 para hacer Fork y luego clonar el repositorio, y sigue las instrucciones de como correr tu app de Django. 
+> También recuerda que si vas a usar este repositorio tienes que seguir las instrucciones de la auxiliar 1 para hacer Fork y luego clonar el repositorio, y puedes seguir las instrucciones de como correr tu app de Django. 
+
 ## Librería Auth
 Django posee su propio sistema de usuarios, el cual esta incluido en la [librería Auth](https://docs.djangoproject.com/en/2.2/topics/auth/). 
 Un usuario está representado por un objeto de la clase User y sus atributos principales son:
