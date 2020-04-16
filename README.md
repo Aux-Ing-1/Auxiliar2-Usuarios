@@ -448,6 +448,8 @@ Finalmente vamos a modificar la view donde se cargan las Tasks para mostrar sola
    Si el usuario inició sesión, entonces se filtrarán las Tasks tal que el owner sea ese usuario. 
    En caso contrario, se buscarán las Tasks tal que el owner sea None.  
    
+   > Para probar la app entera, recuerda crear categrías en el Django admin. Si no eliges ninguna categoría entonces aparecerá un error!
+   
    
 ### Conclusiones
 Si iniciamos sesión solo veremos las Tasks que se crearon con nuestro usuario. En caso contrario veremos las Tasks que agregamos antes de iniciar sesión. 
