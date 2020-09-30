@@ -5,6 +5,13 @@ from django.utils import timezone
 
 from categorias.models import Categoria
 
+from django.contrib.auth.models import AbstractUser
+
+
+class User(AbstractUser):
+    pronombres = [('La','La'),('El','El'), ('Le','Le'),('Otro','Otro')]
+    pronombre = models.CharField(max_length=5,choices=pronombres)
+    apodo = models.CharField(max_length=30)
 
 class Tarea(models.Model):  # Todolist able name that inherits models.Model
     titulo = models.CharField(max_length=250)  # un varchar
@@ -14,4 +21,5 @@ class Tarea(models.Model):  # Todolist able name that inherits models.Model
 
     def __str__(self):
         return self.titulo  # name to be shown when called
+
 

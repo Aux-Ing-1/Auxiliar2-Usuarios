@@ -1,12 +1,8 @@
 # Auxiliar 3: Django Users
-
->Leer antes de empezar!
->
->Hoy crearemos un sistema de usuarios y para esto tendremos que comenzar la base de datos desde 0. 
->Si vas a usar el proyecto de la aux anterior tutorial tendrás que borrar los archivos que están dentro de la carpeta todolist/migrations y solo dejar el archivo `__init__.py` y el archivo `db.sqlite3`. 
->Si vas a clonar este repositorio (que trae el proyecto de la aux anterior), no hagas `python manage.py makemigrations` hasta que el tutorial lo indique! 
-
-> También recuerda que si vas a clonar este repositorio tienes que seguir las instrucciones de la auxiliar 1 para correr tu app de Django. 
+Hoy crearemos un sistema de usuarios para la applicación web de Tareas. 
+Si no tienes el cóigo de la auxiliar anterior puedes hacer Fork de este repositorio y luego lo clonas en tu computador para empezar la actividad. 
+>Para ver como hacer Fork de un repositorio y clonarlo a tu computador te recomiendo leer los primeros pasos de la [auxiliar 1](https://github.com/Aux-Ing-1/Auxiliar1-GIT).
+ 
 ## Librería Auth
 Django posee su propio sistema de usuarios, el cual esta incluido en la [librería Auth](https://docs.djangoproject.com/en/2.2/topics/auth/). 
 Un usuario está representado por un objeto de la clase User y sus atributos principales son:
@@ -18,47 +14,66 @@ Un usuario está representado por un objeto de la clase User y sus atributos pri
 
 [Aquí](https://docs.djangoproject.com/en/2.2/ref/contrib/auth/#django.contrib.auth.models.User)  encuentras todos los atributos de la clase User.
 
-Hoy vamos a agegarle usuarios a nuestra app de Todo List para que cada uno tenga su propia lista de tareas.
+Hoy vamos a agegarle usuarios a nuestra app de Tareas para que cada uno tenga su propia lista de tareas.
 Para esto tendremos que __crear usuarios__, __loguearlos__ y __asignarle un usuario a cada tarea__!
 
-![Pantallazo del resultado final de la app](vista_final.png)
+![Pantallazo del resultado final de la app]()
 
 ## Actividad
+### [Parte 0: Borrar la base de datos]
+Como hoy cambiaremos el modelo de usuarios predeterminado de Django, habrá que comenzar la base de datos desde 0. 
+Esto significa eliminar todas las migraciones y la base de datos de sqlite. 
+
+Para esto tendrás que borrar la carpeta `todoapp/migrations`, `categorias/migrations` y el archivo `db.sqlite3`. 
+> Esto solo se hará hoy y al inicio de todo, nunca debería haber necesidad de borrar todo y empezar denuevo 
+
 ### [Parte 1: Crear usuarios]
-Para nuestra aplicación querremos que los usuarios tengan Nombre, Apodo, Mail y Contraseña. Un User de Django ya trae algunos de estos atributos, pero no todos. 
+Para nuestra aplicación querremos que los usuarios tengan Nombre, Contraseña, Apodo, Mail y Pronombre. Un User de Django ya trae algunos de estos atributos, pero no todos. 
 Es por esto que vamos a crear nuestra propia clase User que heredará de AbstractUser y así podremos guardar todos los atributos que querramos. 
 
 AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Django y está diseñada para cuando queremos agregar mas información a los usuarios. 
 
 
-1. __Crear modelo User__: en todolist/models.py agregaremos el modelo User que heredará de AbstractUser y le pondremos el atributo apodo, para tener mas información sobre el usuario. Al hacer esto vamos tener acceso a los atributos base de User de Django y toda la funcionalidad para Autenticación. 
-
-    ```python
-   from django.contrib.auth.models import AbstractUser
-
-    class User(AbstractUser):
-        apodo=models.CharField(max_length=30)
+1. __Crear modelo User__: 
     
+    * En `todoapp/models.py` agregaremos el modelo `User` que heredará de `AbstractUser` y le pondremos los atributos apodo y pronombre para tener mas información sobre le usuarie. Al hacer esto vamos tener acceso a los atributos base de User de Django y toda la funcionalidad para Autenticación. 
+
+        > Importante! La clase User tiene que ser la primera clase que aparezca en el modelo. 
+    
+        ```python
         
-    ```
-    >Importante! La clase User tiene que ser la primera clase que aparezca en el modelo. 
+        from django.contrib.auth.models import AbstractUser
+        
+        class User(AbstractUser):
+           pronombres = [('La','La'),('El','El'), ('Le','Le'),('Otro','Otro')]
+           pronombre = models.CharField(max_length=5,choices=pronombres)
+           apodo = models.CharField(max_length=30)
+            
+        ```
+      ***Explicar los choices*****
+    * Antes de hacer las migraciones tenemos que hacer un paso más. 
+        Vamos a ir a `TODOproject/settings.py` y agregaremos esta línea: 
     
+        `AUTH_USER_MODEL = 'todoapp.User'`
     
-    Antes de hacer las migraciones tenemos que hacer un paso más. Vamos a ir a todoapp/settings.py y agregaremos esta línea: 
+        Con esta linea le diremos al proyecto que el sistema de usuarios ahora será en base al modelo User que acabamos de crear. 
     
-    `AUTH_USER_MODEL = 'todolist.User'`
+    *  Luego de agregar este modelo hay que hacer 
+        ```python
+        $ python manage.py makemigrations todoapp categorias
+        $ python manage.py migrate
+        ```
+        para que los cambios en el modelo se reflejen en la base de datos. 
+    *  Ahora puedes hacer `python manage.py runserver` para correr la app y al entrar a `127.0.0.1:8000/tareas` deberia poder ver el form de tareas. 
+        > Como en el primer paso borramos todos los datos de la base de datos, ahora no tendrás cateorías para agregar tus tareas. 
+        > Para arreglar esto, en la carpeta categorías hay un archivo `json` con catogrías listas para agregar. Para usar este archivo tendrás que hacer el siguiente comando: 
+        
+        >`python manage.py loaddata categorias/categorias.json` 
     
-    Con esta linea le diremos al proyecto que el sistema de usuarios ahora será en base al modelo User que acabamos de crear. 
-    
-    > Importante! Luego de agregar este modelo hay que hacer 
-    >```python
-    >$ python manage.py makemigrations
-    >$ python manage.py migrate
-    >```
-    >para que los cambios en el modelo se reflejen en la base de datos. 
-
 2. __Formulario de registro de usuarios__:
- Para crear un  nuevo usuario crearemos una nueva url que será /register. Al entrar a esta url habrá un formulario que luego de llenarlo correctamente creará un nuevo User y nos llevará a la página de inicio de la app. 
+    
+    Para crear un  nuevo usuario crearemos una nueva url que será `/register`. 
+    Al entrar a esta url habrá un formulario que luego de llenarlo correctamente creará un nuevo User y nos llevará a la página de inicio de la app. 
     
     2.1 __Urls__
      
