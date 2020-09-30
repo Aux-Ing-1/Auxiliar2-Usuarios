@@ -50,7 +50,8 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
        apodo = models.CharField(max_length=30)
             
         ```
-      ***Explicar los choices*****
+      > El pronombre será un CharField pero solo podrá ser alguna de las opciones definidas en la variable pronombres. El primer elemento del par será el valor del atributo, y el segundo valor del par será el valor en lenguaje natural. En este caso les llamaremos igual. 
+      
     * Antes de hacer las migraciones tenemos que hacer un paso más. 
         Vamos a ir a `TODOproject/settings.py` y agregaremos esta línea: 
     
