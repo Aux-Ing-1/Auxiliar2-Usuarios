@@ -498,12 +498,12 @@ Queremos ver un mensaje así luego de crear un usuario:
         ...
         user = User.objects.create_user(username=nombre, password=contraseña,email=mail)
         messages.success(request, 'Se creó el usuario para ' + user.apodo)
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/tareas')
  ```
 Aquí estamos agregando un nuevo mensaje de tipo success que dirá "Se creó el usuario para _apodo_".  
 Y en index.html agregamos el siguiente código para mostrar el mensaje al inicio de la página (fíjense que se agrega solo el if): 
 ```html
-    <div class="content">
+   <!-- Encabezado de la página-->
         {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
