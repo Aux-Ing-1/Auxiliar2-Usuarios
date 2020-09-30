@@ -12,6 +12,14 @@
                <h1>TodoApp</h1>
                <p class="tagline">a Django todo app</p>
            <!-- Fin encabezado -->
+               <hr>
+            {% if user.is_authenticated %}
+               <a href="{% url 'logout' %}">Cerrar sesión </a>
+            {% else %}
+               <a href="{% url 'register_user' %}">Registrarse</a>
+              <a href="{% url 'login' %}">Iniciar Sesión</a>
+            {% endif %}
+            <hr>
                <form action="" method="post">
                {% csrf_token %} <!-- csrf token for basic security -->
                    <!-- Formulario de nueva tarea-->

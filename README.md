@@ -73,11 +73,11 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
 2. __Formulario de registro de usuarios__:
     
     Para crear un  nuevo usuario crearemos una nueva url que será `/register`. 
-    Al entrar a esta url habrá un formulario que luego de llenarlo correctamente creará un nuevo User y nos llevará a la página de inicio de la app. 
+    Al entrar a esta url habrá un formulario que luego de llenarlo correctamente creará un nuevo `User` y nos llevará a la página de inicio de la app. 
     
     2.1 __Urls__
      
-     Primero crearemos la url en urls.py agregando la siguiente línea: 
+     Primero crearemos la url en `todoapp/urls.py` agregando la siguiente línea: 
      
      ```python
        path('register', views.register_user, name='register_user'), 
@@ -85,17 +85,18 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
    
    2.2 __Views__
 
-    Luego tenemos que hacer la view register_user para mostrar el formulario con el siguiente código en todolist/views.py:
+    Luego tenemos que hacer la view `register_user` para mostrar el formulario con el siguiente código en `todoapp/views.py`:
   
     ```python
      def register_user(request):
-       return render(request,"todolist/register_user.html")
+       return render(request,"todoapp/register_user.html")
     ```
    >Fíjate que en views creamos el método register_user porque en urls dijimos que /register estaría asociado a este método. 
    
    2.3 __Templates__
    
-   Finalmente tenemos que crear el formulario para registrar al usuario. Este lo guardaremos en templates/todolist/register_user.html y llevará lo siguiente: 
+   Finalmente tenemos que crear el formulario para registrar al usuario. 
+   Este lo guardaremos en templates/todoapp/register_user.html y llevará lo siguiente: 
    ```
         <!DOCTYPE html>
         <html lang="en">
@@ -132,42 +133,50 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
         </html>
     ```
 
-    ### __¿Qué hay en este código html?__ 
+    __¿Qué hay en este código html?__ 
+    
     Lo mas importante por ahora es el formulario que se crea con la etiqueta ```<form>```. 
     Todo lo que está dentro de form serán los campos que tendremos que llenar para crear un usuario. 
     Cada "campo" está formado por un ```<label>``` y un ```<input>``` (este último es donde ingresamos los datos). 
     
-   > Ahora si hacemos ```python manage.py runserver``` e ingresamos a 127.0.0.1/register deberíamos ver el formulario de registro. 
+    Es importante que para la contraseña el input tenga type `password` y que para el correo tenga type `email`. 
+    
+    * Ahora si hacemos ```python manage.py runserver``` e ingresamos a `127.0.0.1/register` deberíamos ver el formulario de registro. 
    
    ![Vista registro](vista-registro.png)
    
-   > ¿Qué pasa si intentamos crear un usuario? Error, porque no le hemos dado instrucciones a la app para registrar el usuario. 
+   > ¿Qué pasa si intentamos crear un usuario? Nada, porque no le hemos dado instrucciones a la app para registrar el usuario. 
    
 3. __Guardar datos del formulario__:
    
-   Cuando creamos el método _register_user_ solo le indicamos que hiciera render del formulario. 
+   Cuando creamos el método `register_user` solo le indicamos que hiciera render del formulario. 
    Ahora queremos diferenciar entre una llamada GET (cuando cargamos la página) y una llamada POST (cuando eviamos el formulario).
    
    Para esto vamos a editar todolist/views.py y diferenciar estos dos casos: 
    ```python
    from django.http import HttpResponseRedirect
-    def register_user(request):
-        if request.method == 'GET':
-            return render(request,"todolist/register_user.html")
-    
-        elif request.method == 'POST':
-            nombre = request.POST['nombre']
-            contraseña = request.POST['contraseña']
-            apodo = request.POST['apodo']
-            mail = request.POST['mail']
-            user = User.objects.create_user(username=nombre, password=contraseña,email=mail,apodo=apodo)
-            return HttpResponseRedirect('/')
-     
+   def register_user(request):
+       if request.method == 'GET': #Si estamos cargando la página
+        return render(request, "todoapp/register_user.html") #Mostrar el template
+
+       elif request.method == 'POST': #Si estamos recibiendo el form de registro
+        #Tomar los elementos del formulario que vienen en request.POST
+        nombre = request.POST['nombre']
+        contraseña = request.POST['contraseña']
+        apodo = request.POST['apodo']
+        pronombre = request.POST['pronombre']
+        mail = request.POST['mail']
+
+        #Crear el nuevo usuario
+        user = User.objects.create_user(username=nombre, password=contraseña, email=mail, apodo=apodo, pronombre=pronombre)
+
+        #Redireccionar la página /tareas
+        return HttpResponseRedirect('/tareas')
    ```
     
    ```python
        #Estos son los imports que van al inicio de views.py
-       from todolist.models import User       
+       from todoapp.models import User       
     ```
    
    En el código anterior, cuando el método es POST estamos haciendo lo siguiente: 
@@ -178,59 +187,27 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
    > Atención: En el formulario de registro le pusimos un _name_ a cada ```<input>``` y con ese name podemos acceder a los datos en ```request.POST```.
    
  4. __Prueba que el formulario esté funcionando__ y agrega cuentas. 
+       
        Para comprobar que se crearon puedes hacer lo siguiente: 
-       * Editar todolist/admin.py y agegar ```admin.site.register(models.User)``` .
+       * Editar `todolist/admin.py` y agregar 
+       ```
+        from todoapp.models import User, Tarea
+        from categorias.models import Categoria
+        
+        admin.site.register(Categoria)
+        admin.site.register(User)
+        admin.site.register(Tarea)
+    ```
        
        * Crea un superusuario haciendo ```python manage.py createsuperuser```. 
        
-       * Luego ingresa a 127.0.0.1/admin y deberías poder ver todos los Users que has creado! 
+       * Luego ingresa a 127.0.0.1:8000/admin y deberías poder ver todos los Users que has creado! 
        ![vista admin con my_user](vista_myuser_admin.png)
 
- 4. __[Bonus track]__ Agregar un mensaje al crear el usuario. 
  
-    Existe una librería en Django que nos permite crear mensajes o alertas ([mas info](https://docs.djangoproject.com/en/3.0/ref/contrib/messages/)) cuando terminamos de procesar alguna información. 
-    
-    Gracias a esto cuando procesamos un formulario podemos enviar un mensaje a la siguiente página que mostramos. 
-    
-    Queremos ver un mensaje así luego de crear un usuario: 
-     ![Usuario creado](vista_mensaje_inicio.png)
-    
-     __¿Cómo hacemos esto?__
-     * Importar messages de django.contrib 
-     * Agregar el mensaje después de crear el usuario. 
-     * Mostrar el mensaje en el template 
-     
-     El final del método register_user de views.py debería quedar así: 
-     ```
-        from django.contrib import messages
-        ....
-        elif request.method == 'POST':
-            ...
-            ...
-            user = User.objects.create_user(username=nombre, password=contraseña,email=mail)
-            messages.success(request, 'Se creó el usuario para ' + user.apodo)
-            return HttpResponseRedirect('/')
-     ```
-    Aquí estamos agregando un nuevo mensaje de tipo success que dirá "Se creó el usuario para _apodo_".  
-    Y en index.html agregamos el siguiente código para mostrar el mensaje al inicio de la página (fíjense que se agrega solo el if): 
-    ```html
-        <div class="content">
-            {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                         <div class="alert">
-                          {{message}}
-                        </div>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-            <h1>TodoApp</h1>
-    ``` 
-    Esto revisará si hay mensajes y por cada mensaje que haya lo mostrará en el template. 
-
 ### [Parte 2: Login y logout]
-Un login es un formulario donde los usuarios inician sesión.
-Mientras que logout es un botón o link por el cual los usuarios cierran sesión.
+Un **login** es un formulario donde los usuarios inician sesión.
+Mientras que **logout** es un botón o link por el cual los usuarios cierran sesión.
 Es importante que el login solo sea visible cuando los usuarios no han iniciado sesión y en caso de que ya haya iniciado sesión, deber ver un link para cerrar sesión (logout).
 
 Como el modelo User que implementamos hereda de AbstractUser, la autenticación será muy fácil de implementar en nuestro proyecto. 
@@ -248,13 +225,13 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
 ![Login-register](login-register.png)                    
 
 1. __Crear botones de login - logout__: 
+
     En index.html vamos a crear botones para hacer login o logout según lo que se necesite. En un principio los botones no harán nada,
     y les iremos dando funcionalidad a medida que avanzamos. 
+    Agrega el siguiente código justo antes de la línea donde comienza el form (`<form>`)
     
     index.html: 
     ```html
-    <h1>TodoApp</h1>
-    <p class="tagline">a Django todo app</p>
     <hr>
     {% if user.is_authenticated %}
        <a href="">Cerrar sesión</a>
@@ -263,18 +240,13 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
        <a href="">Iniciar Sesión</a>
     {% endif %}
     <hr>
-    <form action="" method="post">
-   ...
-   ...
     ```  
-   
-    > Fíjate que hay elementos del código anterior que ya estaban en tu archivo.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-    
-     En el código anterior estamos revisando si el usuario que está viendo la página ya hizo login y 
+    En el código anterior estamos revisando si el usuario que está viendo la página ya hizo login y 
      si lo hizo entonces le mostramos la opción de logout. En cambio si no ha hecho login, le daremos la opción de hacer login o registrarse. 
      La opción de registrarse ya tiene un href porque ya implementamos el registro de usuarios en el paso anterior. 
 
 2. __Login__:
+
     Para hacer login tendremos una url especial para esto (/login). El formulario de login será igual que los que creamos antes, pero solo pediremos nombre y contraseña. 
     
     Para esto crearemos un formulario donde se inicia sesión, la url de login, y la view que nos permitirá hacer el login:
@@ -286,12 +258,13 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
    
    2.2 __Views__: Creamos el método login_user que hará render del formulario de login. 
    ```python
-   def login_user(request):
-       if request.method == 'GET':
-           return render("todolist/login.html")    
+    def login_user(request):
+        if request.method == 'GET':
+            return render(request,"todoapp/login.html")  
    ```
    
-   2.3 __Templates__: Creamos el html del formulario, que tendrá nombre y contraseña. Para esto creamos un archivo login.html en la carpeta todolist/templates/todolist. 
+   2.3 __Templates__: Creamos el html del formulario, que tendrá nombre y contraseña. 
+   Para esto creamos un archivo `login.html` en la carpeta `todoapp/templates/todoapp`. 
    
    Hay que poner atención a lo que hay dentro de ```<form>``` porque ahí están los campos donde se piden los datos. 
    ```html
@@ -323,12 +296,15 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
         </html>
     ```
    
-   Igual que antes, si ingresamos a _127.0.0.1/login_ veremos el formulario de login donde se pide el nombre y la contraseña.
+   Igual que antes, si ingresamos a `127.0.0.1:8000/login` veremos el formulario de login donde se pide el nombre y la contraseña.
+   
    Si enviamos el formulario (apretamos el botón) debería aparecer un error porque aun no le indicamos a la app qué hacer cuando enviamos el formulario. 
    
-   Para arreglar esto tenemos que editar views.py para que inicie sesión cuando el método sea POST como muestra el paso siguiente. 
+   Para arreglar esto tenemos que editar `views.py` para que inicie sesión cuando el método sea POST, como muestra el paso siguiente. 
    
-   2.4 __Autenticar y loguear el usuario__: A continuación está el código que nos permitirá autenticar y loguear al usuario. Este código hace lo siguiente: 
+   2.4 __Autenticar y loguear el usuario__: 
+   
+   A continuación está el código que nos permitirá autenticar y loguear al usuario. Este código hace lo siguiente: 
    * Cuando se reciba el formulario se guardará en variables el nombre y la contraseña que ingresó el usuario.
    * Luego usaremos el método ```authenticate(user, password)``` que nos permitirá buscar el usuario con esas credenciales. 
    * Si authenticate no entrega None, significa que el usuario si existe y podemos hacer ```login()```. 
@@ -339,7 +315,7 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
    from django.contrib.auth import authenticate, login,logout
    def login_user(request):
        if request.method == 'GET':
-           return render(request,"todolist/login.html")
+           return render(request,"todoapp/login.html")
        if request.method == 'POST':
            username = request.POST['username']
            contraseña = request.POST['contraseña']
@@ -351,20 +327,17 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
                return HttpResponseRedirect('/register')
    ```
    
-   2.5 Antes de terminar con el login nos falta darle funcionalidad al botón de login que creamos en index.html. 
+   2.5 Antes de terminar con el login nos falta darle funcionalidad al botón de login que creamos en `index.html`. 
    Para esto hay que modificar la siguiente línea del archivo:
    ```python
      <a href="{% url 'login' %}">Iniciar Sesión</a>
    ``` 
    Con eso hacemos que al apretar el vínculo que dice "Iniciar Sesión", nos redirigirá a la url que tiene nombre 'login'. 
-   
-   2.6 __[Desafío]__ Qué pasa si ahora queremos mostrar un mensaje después de hacer login? 
-   Intenta hacer que se vea esto al inicio de la página después de iniciar sesión: 
-   ![Mensaje bienvenida ](mensaje_bienvenida.png) 
-   
+         
 3. __Logout__: 
-Para hacer logout no tendremos que llenar ningún formulario, sino que solo apretar el link y cerrar la sesión. 
-Para lograr esto crearemos una url y una view que hará logout y luego redirigirá a la página de inicio. 
+
+    Para hacer logout no tendremos que llenar ningún formulario, sino que solo apretar el link y cerrar la sesión. 
+    Para lograr esto crearemos una url y una view que hará logout y luego redirigirá a la página de inicio. 
     
     3.1 __Urls__:
     Creamos la url /logout que cargará el método logout_user en las views y tiene como nombre 'logout'. 
@@ -376,96 +349,149 @@ Para lograr esto crearemos una url y una view que hará logout y luego redirigir
    Como nuestros usuarios son usuarios de Django, hacer logout es igual de sencillo que el login. 
    Solo tendremos que llamar al método logout() y ya se habrá cerrado la sesión del usuario. 
    
+   Para esto, en `todoapp/views.py` hay que agregar el método `logout_user`: 
    ```python
     
     def logout_user(request):
        logout(request)
-       return HttpResponseRedirect('/')
+       return HttpResponseRedirect('/tareas')
    ```
     3.3 __Templates__: 
     Antes solo creamos el vínculo que serviría para cerrar sesión, pero no lo vinculamos con ninguna url. 
-    Ahora que creamos la url para logout, podremos agregarla a nuestro template index.html modificando la siguiente línea: 
+    Ahora que creamos la url para logout, podremos agregarla a nuestro template `index.html` modificando la siguiente línea: 
     ```python
        <a href="{% url 'logout' %}">Cerrar sesión </a>
    ```
    Al igual que con login, cuando agregamos el código `{% url 'logout' %}` a href, estamos diciendo que busque una url con el nombre 'logout'. 
    En este caso llamará a _/logout_. 
    
-### [Parte 3: Cada usuario tendrá sus tasks]
-Para terminar, queremos que un usuario que está logueado solo vea las tasks que fueron creadas por él. 
+### [Parte 3: Cada usuario tendrá sus Tareas]
+Para terminar, queremos que un usuario que está logueado solo vea las Tareas que fueron creadas por él. 
 Para esto tendremos los siguientes requisitos: 
-* Una task creada por un usuario anónimo, solo se mostrará cuando el usuario sea anónimo. 
-* Una task creada por un usuario logueado, solo se mostrará cuando ese usuario esté logueado.
-* Un usuario logueado solo verá las tasks creadas por él. 
+* Una Tarea creada por un usuario anónimo, solo se mostrará cuando el usuario sea anónimo. 
+* Una Tarea creada por un usuario logueado, solo se mostrará cuando ese usuario esté logueado.
+* Un usuario logueado solo verá las Tareas creadas por él. 
 
-Para asociar una task a un usuario tendremos que modificar nuestro modelo Task y agregarle una llave foránea.
+Para asociar una Tarea a un usuario tendremos que modificar nuestro modelo Tarea y agregarle una llave foránea.
 
-Luego tendremos que modificar la view donde se crean las Tasks para asociarla a un usuario, en el caso que exista un usuario logueado. 
+Luego tendremos que modificar la view donde se crean las Tareas para asociarla a un usuario, en el caso que exista un usuario logueado. 
 
-Finalmente vamos a modificar la view donde se cargan las Tasks para mostrar solamente las Taks que corresponden a ese usuario. 
+Finalmente vamos a modificar la view donde se cargan las Tareas para mostrar solamente las Tareas que corresponden a ese usuario. 
 
-1. __Modificar el modelo Task__: Vamos a agregar un atributo a Task que se llamará "owner". 
+1. __Modificar el modelo Tarea__: 
+
+    Vamos a agregar un atributo a Tarea que se llamará "owner". 
     Este atributo será una llave foránea a User y podrá ser nula. 
-    En la clase Task de todolist/models.py agregamos el siguiente atributo: 
+    En la clase Tarea de `todoapp/models.py` agregamos el siguiente atributo: 
 
      ```python
        owner = models.ForeignKey(User,blank=True,null=True, on_delete=models.CASCADE)
     ```
     > Importante! Luego de modificar este modelo hay que hacer 
     >```python
-    >$ python manage.py makemigrations
+    >$ python manage.py makemigrations todoapp
     >$ python manage.py migrate
     >```
     >para que los cambios en el modelo se reflejen en la base de datos. 
 
        
-2. __Modificar la creación de Tasks en views.py__: 
-    En el método index() de views.py es donde se crean las nuevas tasks, 
-    por lo tanto modificaremos este método para asociar la nueva Task a un usuario que esté logueado. 
+2. __Modificar la creación de Tareas en views.py__: 
 
-    views.py: 
+    En el método `tareas()` de views.py es donde se crean las nuevas Tareas, 
+    por lo tanto modificaremos este método para asociar la nueva Tarea a un usuario que esté logueado. 
+    
+    Para eso en el método `tareas` de `todoapp/views.py` habrá que revisar si el `request.user` está autenticado. 
+    El siguiente código muestra como debería quedar esta parte del código. Modifica tu `views.py` para que quede como este: 
+    
     ```python
-        if "taskAdd" in request.POST: #checking if there is a request to add a todo
-            title = request.POST["description"] #title
-            date = str(request.POST["date"]) #date
-            category = request.POST["category_select"] #category
-            content = title + " -- " + date + " " + category #content
-            if request.user.is_authenticated:
-                Todo = Task(title=title, content=content, due_date=date, category=Category.objects.get(name=category),owner=request.user)
-            else:
-                Todo = Task(title=title, content=content, due_date=date, category=Category.objects.get(name=category))
-            Todo.save() #saving the todo
-            return redirect("/") #reloading the page
-   ```
-   Fijarse en sólo agregar el código que sea diferente al que ya está en views.py. 
+       if request.method == "POST":  # revisar si el método de la request es POST
+        if "taskAdd" in request.POST:  # verificar si la request es para agregar una tarea (esto está definido en el button)
+            titulo = request.POST["titulo"]  # titulo de la tarea
+            nombre_categoria = request.POST["selector_categoria"]  # nombre de la categoria
+            categoria = Categoria.objects.get(nombre=nombre_categoria)  # buscar la categoría en la base de datos
+            contenido = request.POST["contenido"]  # contenido de la tarea
    
+            #Verificar si el usuario inició sesión o no!!
+            if request.user.is_authenticated:
+                nueva_tarea = Tarea(titulo=titulo, contenido=contenido, categoria=categoria,owner=request.user)  # Crear la tarea
+            else:
+                nueva_tarea = Tarea(titulo=titulo, contenido=contenido, categoria=categoria)
+            nueva_tarea.save()  # guardar la tarea en la base de datos.
+            return redirect("/tareas")  # recargar la página.
+   ```
+
    En esta variación lo que estamos haciendo es verificar si el usuario está autenticado. 
    Si está autenticado entonces se agregará el atributo "owner". 
    Si no está autenticado, se dejará vacío. 
 
-3. __Modificar la carga de Tasks en views.py__: En el método index() de views.py creamos la variable `todos` que tomará todas las Tasks que luego mostraremos en el template. 
-    Ahora, no queremos mostrar todas las Tasks sino que sólo las que pertenezcan al usuario. 
+3. __Modificar la carga de Tareas en views.py__: 
+
+    En el método `tareas()` de views.py creamos la variable `mis_tareas` que tomará todas las Tareas que luego mostraremos en el template. 
+    Ahora, no queremos mostrar todas las Tareas sino que sólo las que pertenezcan al usuario. 
     
-    Para esto tendremos que cambiar la _query_ que haremos para cargar las Tasks. En el método index de views.py: 
+    Para esto tendremos que cambiar la _query_ que haremos para cargar las Tareas. En el método `tareas` de `todoapp/views.py` hay que agregar esta condición al crear la variable `mis_tareas` 
     
     ```python
-    def index(request): #the index view
-        if request.user.is_authenticated:
-            todos = Task.objects.filter(owner=request.user) #quering all todos with the object manager
-        else:
-            todos= Task.objects.filter(owner=None)
-        categories = Category.objects.all() #getting all categories with object manager
+       if request.user.is_authenticated:
+           mis_tareas = Tarea.objects.filter(owner=request.user)# quering all todos with the object manager
+       else:
+           mis_tareas = Tarea.objects.filter(owner=None)
    ```
    
-   Fijarse en sólo agregar el código que sea diferente al que ya está en views.py.
    
    En esta variación estamos revisando si el usuario inició sesión o no, con user.is_autenticated.
    Si el usuario inició sesión, entonces se filtrarán las Tasks tal que el owner sea ese usuario. 
    En caso contrario, se buscarán las Tasks tal que el owner sea None.  
    
-   > Para probar la app entera, recuerda crear categrías en el Django admin. Si no eliges ninguna categoría entonces aparecerá un error!
-   
-   
+
+### [Bonus] Agregar un mensaje al crear el usuario. 
+ 
+Existe una librería en Django que nos permite crear mensajes o alertas ([mas info](https://docs.djangoproject.com/en/3.0/ref/contrib/messages/)) cuando terminamos de procesar alguna información. 
+
+Gracias a esto cuando procesamos un formulario podemos enviar un mensaje a la siguiente página que mostramos. 
+
+Queremos ver un mensaje así luego de crear un usuario: 
+ ![Usuario creado](vista_mensaje_inicio.png)
+
+ __¿Cómo hacemos esto?__
+ * Importar messages de django.contrib en `views.py`
+ * Agregar el mensaje después de crear el usuario. 
+ * Mostrar el mensaje en el template 
+ 
+ El final del método `register_user` de `views.py` debería quedar así: 
+ ```
+    from django.contrib import messages
+    ....
+    elif request.method == 'POST':
+        ...
+        ...
+        user = User.objects.create_user(username=nombre, password=contraseña,email=mail)
+        messages.success(request, 'Se creó el usuario para ' + user.apodo)
+        return HttpResponseRedirect('/')
+ ```
+Aquí estamos agregando un nuevo mensaje de tipo success que dirá "Se creó el usuario para _apodo_".  
+Y en index.html agregamos el siguiente código para mostrar el mensaje al inicio de la página (fíjense que se agrega solo el if): 
+```html
+    <div class="content">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                     <div class="alert">
+                      {{message}}
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h1>TodoApp</h1>
+``` 
+Esto revisará si hay mensajes y por cada mensaje que haya lo mostrará en el template. 
+
+
+__[Desafío]__ 
+
+   Qué pasa si ahora queremos mostrar un mensaje después de hacer login? 
+   Intenta hacer que se vea esto al inicio de la página después de iniciar sesión: 
+   ![Mensaje bienvenida ](mensaje_bienvenida.png) 
 ### Conclusiones
 Si iniciamos sesión solo veremos las Tasks que se crearon con nuestro usuario. En caso contrario veremos las Tasks que agregamos antes de iniciar sesión. 
    ![Vista final logueada](vista_final_logueada.png)
