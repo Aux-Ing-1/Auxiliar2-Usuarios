@@ -42,12 +42,12 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
     
         ```python
         
-        from django.contrib.auth.models import AbstractUser
+      from django.contrib.auth.models import AbstractUser
         
-        class User(AbstractUser):
-           pronombres = [('La','La'),('El','El'), ('Le','Le'),('Otro','Otro')]
-           pronombre = models.CharField(max_length=5,choices=pronombres)
-           apodo = models.CharField(max_length=30)
+      class User(AbstractUser):
+       pronombres = [('La','La'),('El','El'), ('Le','Le'),('Otro','Otro')]
+       pronombre = models.CharField(max_length=5,choices=pronombres)
+       apodo = models.CharField(max_length=30)
             
         ```
       ***Explicar los choices*****
@@ -60,8 +60,8 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
     
     *  Luego de agregar este modelo hay que hacer 
         ```python
-        $ python manage.py makemigrations todoapp categorias
-        $ python manage.py migrate
+       $ python manage.py makemigrations todoapp categorias
+       $ python manage.py migrate
         ```
         para que los cambios en el modelo se reflejen en la base de datos. 
     *  Ahora puedes hacer `python manage.py runserver` para correr la app y al entrar a `127.0.0.1:8000/tareas` deberia poder ver el form de tareas. 
@@ -80,7 +80,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
      Primero crearemos la url en `todoapp/urls.py` agregando la siguiente línea: 
      
      ```python
-       path('register', views.register_user, name='register_user'), 
+   path('register', views.register_user, name='register_user'), 
     ``` 
    
    2.2 __Views__
@@ -88,7 +88,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
     Luego tenemos que hacer la view `register_user` para mostrar el formulario con el siguiente código en `todoapp/views.py`:
   
     ```python
-     def register_user(request):
+   def register_user(request):
        return render(request,"todoapp/register_user.html")
     ```
    >Fíjate que en views creamos el método register_user porque en urls dijimos que /register estaría asociado a este método. 
@@ -175,8 +175,8 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
    ```
     
    ```python
-       #Estos son los imports que van al inicio de views.py
-       from todoapp.models import User       
+   #Estos son los imports que van al inicio de views.py
+   from todoapp.models import User       
     ```
    
    En el código anterior, cuando el método es POST estamos haciendo lo siguiente: 
@@ -253,14 +253,14 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
     
     2.1 __Urls__: crear la url _/login_ que cargará el método login_user en las views.  
     ```python
-       path('login',views.login_user, name='login'),
+   path('login',views.login_user, name='login'),
     ```     
    
    2.2 __Views__: Creamos el método login_user que hará render del formulario de login. 
    ```python
-    def login_user(request):
-        if request.method == 'GET':
-            return render(request,"todoapp/login.html")  
+   def login_user(request):
+       if request.method == 'GET':
+           return render(request,"todoapp/login.html")  
    ```
    
    2.3 __Templates__: Creamos el html del formulario, que tendrá nombre y contraseña. 
@@ -329,8 +329,8 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
    
    2.5 Antes de terminar con el login nos falta darle funcionalidad al botón de login que creamos en `index.html`. 
    Para esto hay que modificar la siguiente línea del archivo:
-   ```python
-     <a href="{% url 'login' %}">Iniciar Sesión</a>
+   ```html
+   <a href="{% url 'login' %}">Iniciar Sesión</a>
    ``` 
    Con eso hacemos que al apretar el vínculo que dice "Iniciar Sesión", nos redirigirá a la url que tiene nombre 'login'. 
          
@@ -342,7 +342,7 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
     3.1 __Urls__:
     Creamos la url /logout que cargará el método logout_user en las views y tiene como nombre 'logout'. 
      ```python
-       path('logout',views.logout_user, name='logout'),
+   path('logout',views.logout_user, name='logout'),
     ```
    
    3.2 __Views__:
@@ -352,15 +352,15 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
    Para esto, en `todoapp/views.py` hay que agregar el método `logout_user`: 
    ```python
     
-    def logout_user(request):
+   def logout_user(request):
        logout(request)
        return HttpResponseRedirect('/tareas')
    ```
     3.3 __Templates__: 
     Antes solo creamos el vínculo que serviría para cerrar sesión, pero no lo vinculamos con ninguna url. 
     Ahora que creamos la url para logout, podremos agregarla a nuestro template `index.html` modificando la siguiente línea: 
-    ```python
-       <a href="{% url 'logout' %}">Cerrar sesión </a>
+    ```html
+   <a href="{% url 'logout' %}">Cerrar sesión </a>
    ```
    Al igual que con login, cuando agregamos el código `{% url 'logout' %}` a href, estamos diciendo que busque una url con el nombre 'logout'. 
    En este caso llamará a _/logout_. 
@@ -385,7 +385,7 @@ Finalmente vamos a modificar la view donde se cargan las Tareas para mostrar sol
     En la clase Tarea de `todoapp/models.py` agregamos el siguiente atributo: 
 
      ```python
-       owner = models.ForeignKey(User,blank=True,null=True, on_delete=models.CASCADE)
+   owner = models.ForeignKey(User,blank=True,null=True, on_delete=models.CASCADE)
     ```
     > Importante! Luego de modificar este modelo hay que hacer 
     >```python
@@ -432,10 +432,10 @@ Finalmente vamos a modificar la view donde se cargan las Tareas para mostrar sol
     Para esto tendremos que cambiar la _query_ que haremos para cargar las Tareas. En el método `tareas` de `todoapp/views.py` hay que agregar esta condición al crear la variable `mis_tareas` 
     
     ```python
-       if request.user.is_authenticated:
-           mis_tareas = Tarea.objects.filter(owner=request.user)# quering all todos with the object manager
-       else:
-           mis_tareas = Tarea.objects.filter(owner=None)
+   if request.user.is_authenticated:
+       mis_tareas = Tarea.objects.filter(owner=request.user)# quering all todos with the object manager
+   else:
+       mis_tareas = Tarea.objects.filter(owner=None)
    ```
    
    
