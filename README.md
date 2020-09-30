@@ -333,7 +333,7 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
            usuario = authenticate(username=username,password=contraseña)
            if usuario is not None:
                login(request,usuario)
-               return HttpResponseRedirect('/')
+               return HttpResponseRedirect('/tareas')
            else:
                return HttpResponseRedirect('/register')
    ```
