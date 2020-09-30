@@ -112,17 +112,28 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
                    <label for="nombre_usuario">Nombre</label>
                    <input type="text" class="form-control" id=nombre_usuario name="nombre" required>
                </div>
-       
+
                <div class="form-group">
                    <label for="contraseña">Contraseña</label>
                    <input type="password" class="form-control" id="contraseña" name="contraseña" required>
                </div>
-       
+
                 <div class="form-group">
                    <label for="apodo">Apodo</label>
                    <input type="text" class="form-control" id="apodo" name="apodo" required>
                 </div>
-                 
+
+               <div>
+                   <label for="pronombre">Pronombre</label>
+                   <select id="pronombre" class="form-control" name="pronombre" required>
+                       <option class="disabled" value="">Elige un pronombre</option>
+                       <option value="El">El</option>
+                       <option value="La">La</option>
+                       <option value="Le">Le</option>
+                       <option value="Otro">Otro</option>
+                   </select>
+               </div>
+
                 <div class="form-group">
                     <label for="mail">Mail</label>
                     <input type="email" class="form-control" id="mail" name="mail" required>
