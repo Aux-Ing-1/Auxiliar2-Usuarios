@@ -449,7 +449,7 @@ Finalmente vamos a modificar la view donde se cargan las Tareas para mostrar sol
 Si iniciamos sesión solo veremos las Tareas que se crearon con nuestro usuario. En caso contrario veremos las Tareas que agregamos antes de iniciar sesión. 
    ![Vista final logueada](vista_final_logueada.png)
    
-Si no iniciamos sesión, solo veremos Tasks que se crearon anónimamente. 
+Si no iniciamos sesión, solo veremos Tareas que se crearon anónimamente. 
     ![Vista final sin loguear](vista_final.png)
 
 > Gracias a esta implementación de usuarios, la autenticación es muy fácil y muy parecida en todas las apps de Django.
@@ -457,14 +457,9 @@ Si no iniciamos sesión, solo veremos Tasks que se crearon anónimamente.
 > Es importante usar implementaciones de autenticación que vengan pre-hechas ya que así disminuye la posibilidad de tener problemas de seguridad. 
 > Si se fijaron nunca tuvimos que preocuparnos de guardar contraseñas de forma segura porque eso lo hace la librería Auth. 
 
-> La app se ve en blanco y negro y sin estilo porque no hemos hecho nada relacionado con CSS, la próxima semana les puedo explicar como funciona CSS y cómo dejar bonitas sus apps. 
+> La app se ve en blanco y negro y sin estilo porque no hemos hecho nada relacionado con CSS, la próxima semana les voy a explicar como funciona CSS y cómo dejar bonitas sus apps. 
 
-> Por si les da curiosidad la usuaria que aparece en las imágenes, el nombre está inspirado en [Mileva Marić](https://es.wikipedia.org/wiki/Mileva_Mari%C4%87), 
->y la usuaria está inspirada en mi hermana Mileva.
->
->![Mili](mili.jpeg)
->
->
+
 >
 > La base de este código fue sacada de [Este tutorial](https://medium.com/fbdevclagos/how-to-build-a-todo-app-with-django-17afdc4a8f8c)
 
