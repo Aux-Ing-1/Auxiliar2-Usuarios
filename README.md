@@ -474,7 +474,7 @@ Si no iniciamos sesión, solo veremos Tareas que se crearon anónimamente.
 
 
 >
-> La base de este código fue sacada de [Este tutorial](https://medium.com/fbdevclagos/how-to-build-a-todo-app-with-django-17afdc4a8f8c)
+> La base de este código fue sacada de [este tutorial](https://medium.com/fbdevclagos/how-to-build-a-todo-app-with-django-17afdc4a8f8c).
 
 
 ### [Bonus] Agregar un mensaje al crear el usuario. 
@@ -524,4 +524,5 @@ __[Desafío]__
 
    Qué pasa si ahora queremos mostrar un mensaje después de hacer login? 
    Intenta hacer que se vea esto al inicio de la página después de iniciar sesión: 
+   
    ![Mensaje bienvenida ](mensaje_bienvenida.png) 
