@@ -220,19 +220,19 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
 ### [Parte 2: Login y logout]
 Un **login** es un formulario donde los usuarios inician sesión.
 Mientras que **logout** es un botón o link por el cual los usuarios cierran sesión.
-Es importante que el login solo sea visible cuando los usuarios no han iniciado sesión y en caso de que ya haya iniciado sesión, deber ver un link para cerrar sesión (logout).
+Es importante que el login solo sea visible cuando los usuarios no han iniciado sesión y, en caso de que ya se haya iniciado sesión, deben ver un link para cerrar sesión (logout).
 
 Como el modelo User que implementamos hereda de AbstractUser, la autenticación será muy fácil de implementar en nuestro proyecto. 
-De hecho, antes de implementar cualquier cosa, nuestro proyecto ya tiene una variable user en los templates y en views tenemos request.user. 
+De hecho, antes de implementar cualquier cosa, nuestro proyecto ya tiene una variable `user` en los templates y en views tenemos `request.user`. 
 
-> ¿Cómo saber si una sesión está aciva? 
+> ¿Cómo saber si una sesión está activa? 
 > 
 >En la views : _if request.user.is_authenticated():_
 >
 >En los templates:  _{% if user.is_authenticated %}_
 
     
-Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no hay un usuario logueado. En caso contrario mostraremos un botón de logout. 
+Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no hay un usuario logueado. Si hay un usuario logueado mostraremos un botón de logout. 
 
 ![Login-register](login-register.png)                    
 
@@ -240,7 +240,8 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
 
     En index.html vamos a crear botones para hacer login o logout según lo que se necesite. En un principio los botones no harán nada,
     y les iremos dando funcionalidad a medida que avanzamos. 
-    Agrega el siguiente código justo antes de la línea donde comienza el form (`<form>`)
+    
+    Agrega el siguiente código justo antes de la línea donde comienza el form (`<form>`):
     
     index.html: 
     ```html
@@ -253,22 +254,22 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
     {% endif %}
     <hr>
     ```  
-    En el código anterior estamos revisando si el usuario que está viendo la página ya hizo login y 
-     si lo hizo entonces le mostramos la opción de logout. En cambio si no ha hecho login, le daremos la opción de hacer login o registrarse. 
-     La opción de registrarse ya tiene un href porque ya implementamos el registro de usuarios en el paso anterior. 
+    En el código anterior estamos revisando si el usuario que está viendo la página ya hizo login y, si lo hizo, entonces le mostramos la opción de logout. 
+    En cambio, si no ha hecho login, le daremos la opción de hacer login o registrarse. 
+    La opción de registrarse ya tiene un `href` porque ya implementamos el registro de usuarios en el paso anterior. 
 
 2. __Login__:
 
-    Para hacer login tendremos una url especial para esto (/login). El formulario de login será igual que los que creamos antes, pero solo pediremos nombre y contraseña. 
+    Para hacer login tendremos una URL especial para esto (`/login`). El formulario de login será igual que los que creamos antes, pero solo pediremos nombre y contraseña. 
     
     Para esto crearemos un formulario donde se inicia sesión, la url de login, y la view que nos permitirá hacer el login:
     
-    2.1 __Urls__: crear la url _/login_ que cargará el método login_user en las views.  
+    2.1 __Urls__: Crear la URL _/login_ que cargará el método `login_user` en las views.  
     ```python
    path('login',views.login_user, name='login'),
     ```     
    
-   2.2 __Views__: Creamos el método login_user que hará render del formulario de login. 
+   2.2 __Views__: Creamos el método `login_user` que hará render del formulario de login. 
    ```python
    def login_user(request):
        if request.method == 'GET':
@@ -317,7 +318,7 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
    2.4 __Autenticar y loguear el usuario__: 
    
    A continuación está el código que nos permitirá autenticar y loguear al usuario. Este código hace lo siguiente: 
-   * Cuando se reciba el formulario se guardará en variables el nombre y la contraseña que ingresó el usuario.
+   * Cuando se recibe el formulario, se guarda en variables el nombre y la contraseña que ingresó el usuario.
    * Luego usaremos el método ```authenticate(user, password)``` que nos permitirá buscar el usuario con esas credenciales. 
    * Si authenticate no entrega None, significa que el usuario si existe y podemos hacer ```login()```. 
    * Si el usuario fuera None, significa que no existe un usuario con esas credenciales y se redirige a la vista de registro. 
@@ -344,7 +345,7 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
    ```html
    <a href="{% url 'login' %}">Iniciar Sesión</a>
    ``` 
-   Con eso hacemos que al apretar el vínculo que dice "Iniciar Sesión", nos redirigirá a la url que tiene nombre 'login'. 
+   Con eso hacemos que al apretar el vínculo que dice "Iniciar Sesión", nos redirigirá a la URL que tiene nombre 'login'. 
          
 3. __Logout__: 
 
@@ -352,13 +353,13 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
     Para lograr esto crearemos una url y una view que hará logout y luego redirigirá a la página de inicio. 
     
     3.1 __Urls__:
-    Creamos la url /logout que cargará el método logout_user en las views y tiene como nombre 'logout'. 
+    Creamos la url `/logout` que cargará el método `logout_user` en las views y tiene como nombre 'logout'. 
      ```python
    path('logout',views.logout_user, name='logout'),
     ```
    
    3.2 __Views__:
-   Como nuestros usuarios son usuarios de Django, hacer logout es igual de sencillo que el login. 
+   Como nuestros usuarios son usuarios de Django, hacer logout es igual de sencillo que hacer login. 
    Solo tendremos que llamar al método logout() y ya se habrá cerrado la sesión del usuario. 
    
    Para esto, en `todoapp/views.py` hay que agregar el método `logout_user`: 
@@ -369,12 +370,12 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
        return HttpResponseRedirect('/tareas')
    ```
     3.3 __Templates__: 
-    Antes solo creamos el vínculo que serviría para cerrar sesión, pero no lo vinculamos con ninguna url. 
-    Ahora que creamos la url para logout, podremos agregarla a nuestro template `index.html` modificando la siguiente línea: 
+    Antes solo creamos el vínculo que serviría para cerrar sesión, pero no lo vinculamos con ninguna URL. 
+    Ahora que creamos la URL para logout, podremos agregarla a nuestro template `index.html` modificando la siguiente línea: 
     ```html
    <a href="{% url 'logout' %}">Cerrar sesión </a>
    ```
-   Al igual que con login, cuando agregamos el código `{% url 'logout' %}` a href, estamos diciendo que busque una url con el nombre 'logout'. 
+   Al igual que con login, cuando agregamos el código `{% url 'logout' %}` a `href`, le estamos diciendo que busque una URL con el nombre 'logout'. 
    En este caso llamará a _/logout_. 
    
 ### [Parte 3: Cada usuario tendrá sus Tareas]
