@@ -73,12 +73,12 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
     
 2. __Formulario de registro de usuarios__:
     
-    Para crear un  nuevo usuario crearemos una nueva url que será `/register`. 
-    Al entrar a esta url habrá un formulario que luego de llenarlo correctamente creará un nuevo `User` y nos llevará a la página de inicio de la app. 
+    Para crear un nuevo usuario crearemos una nueva URL que será `/register`. 
+    Al entrar a esta URL habrá un formulario que, luego de llenarlo correctamente, creará un nuevo `User` y nos llevará a la página de inicio de la app. 
     
     2.1 __Urls__
      
-     Primero crearemos la url en `todoapp/urls.py` agregando la siguiente línea: 
+     Primero crearemos la URL en `todoapp/urls.py`, agregando la siguiente línea: 
      
      ```python
    path('register', views.register_user, name='register_user'), 
@@ -86,13 +86,13 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
    
    2.2 __Views__
 
-    Luego tenemos que hacer la view `register_user` para mostrar el formulario con el siguiente código en `todoapp/views.py`:
+    Luego tenemos que hacer la view `register_user` para mostrar el formulario. Para eso colocamos el siguiente código en `todoapp/views.py`:
   
     ```python
    def register_user(request):
        return render(request,"todoapp/register_user.html")
     ```
-   >Fíjate que en views creamos el método register_user porque en urls dijimos que /register estaría asociado a este método. 
+   >Fíjate que en views creamos el método `register_user` porque en `urls.py` dijimos que `/register` estaría asociado a este método. 
    
    2.3 __Templates__
    
