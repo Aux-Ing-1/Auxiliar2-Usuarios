@@ -195,6 +195,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
    * creamos un User con estos datos.
    * redirigimos a la página de inicio. 
    
+   
    > Atención: En el formulario de registro le pusimos un _name_ a cada ```<input>``` y con ese name podemos acceder a los datos en ```request.POST```.
    
  4. __Prueba que el formulario esté funcionando__ y agrega cuentas. 
