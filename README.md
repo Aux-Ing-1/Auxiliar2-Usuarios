@@ -1,6 +1,6 @@
 # Auxiliar 3: Django Users
 Hoy crearemos un sistema de usuarios para la applicación web de Tareas. 
-Si no tienes el cóigo de la auxiliar anterior puedes hacer Fork de este repositorio y luego lo clonas en tu computador para empezar la actividad. 
+Si no tienes el código de la auxiliar anterior puedes hacer Fork de este repositorio y luego lo clonas en tu computador para empezar la actividad. 
 >Para ver como hacer Fork de un repositorio y clonarlo a tu computador te recomiendo leer los primeros pasos de la [auxiliar 1](https://github.com/Aux-Ing-1/Auxiliar1-GIT).
  
 ## Librería Auth
