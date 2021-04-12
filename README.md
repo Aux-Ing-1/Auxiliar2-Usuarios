@@ -97,7 +97,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
    2.3 __Templates__
    
    Finalmente tenemos que crear el formulario para registrar al usuario. 
-   Este lo guardaremos en templates/todoapp/register_user.html y llevará lo siguiente: 
+   Este lo guardaremos en `templates/todoapp/register_user.html` y llevará lo siguiente: 
    ```
         <!DOCTYPE html>
         <html lang="en">
@@ -150,7 +150,6 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
     Lo mas importante por ahora es el formulario que se crea con la etiqueta ```<form>```. 
     Todo lo que está dentro de form serán los campos que tendremos que llenar para crear un usuario. 
     Cada "campo" está formado por un ```<label>``` y un ```<input>``` (este último es donde ingresamos los datos). 
-    
     Es importante que para la contraseña el input tenga type `password` y que para el correo tenga type `email`. 
     
     * Ahora si hacemos ```python manage.py runserver``` e ingresamos a `127.0.0.1/register` deberíamos ver el formulario de registro. 
@@ -162,9 +161,9 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
 3. __Guardar datos del formulario__:
    
    Cuando creamos el método `register_user` solo le indicamos que hiciera render del formulario. 
-   Ahora queremos diferenciar entre una llamada GET (cuando cargamos la página) y una llamada POST (cuando eviamos el formulario).
+   Ahora queremos diferenciar entre una llamada GET (cuando cargamos la página) y una llamada POST (cuando enviamos un formulario).
    
-   Para esto vamos a editar todolist/views.py y diferenciar estos dos casos: 
+   Para esto vamos a editar `todolist/views.py` y diferenciar estos dos casos: 
    ```python
    from django.http import HttpResponseRedirect
    def register_user(request):
@@ -192,8 +191,8 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
     ```
    
    En el código anterior, cuando el método es POST estamos haciendo lo siguiente: 
-   * recuperamos los datos que vienen del formulario
-   * creamos un User con estos datos
+   * recuperamos los datos que vienen del formulario.
+   * creamos un User con estos datos.
    * redirigimos a la página de inicio. 
    
    > Atención: En el formulario de registro le pusimos un _name_ a cada ```<input>``` y con ese name podemos acceder a los datos en ```request.POST```.
