@@ -470,7 +470,7 @@ Si no iniciamos sesión, solo veremos Tareas que se crearon anónimamente.
 > Es importante usar implementaciones de autenticación que vengan pre-hechas ya que así disminuye la posibilidad de tener problemas de seguridad. 
 > Si se fijaron nunca tuvimos que preocuparnos de guardar contraseñas de forma segura porque eso lo hace la librería Auth. 
 
-> La app se ve en blanco y negro y sin estilo porque no hemos hecho nada relacionado con CSS, la próxima semana les voy a explicar como funciona CSS y cómo dejar bonitas sus apps. 
+> La app se ve en blanco y negro y sin estilo porque no hemos hecho nada relacionado con CSS. Más adelante vamos a ver cómo funciona CSS y cómo dejar bonitas sus apps. 
 
 
 >
@@ -487,9 +487,9 @@ Queremos ver un mensaje así luego de crear un usuario:
  ![Usuario creado](vista_mensaje_inicio.png)
 
  __¿Cómo hacemos esto?__
- * Importar messages de django.contrib en `views.py`
+ * Importar messages de django.contrib en `views.py`.
  * Agregar el mensaje después de crear el usuario. 
- * Mostrar el mensaje en el template 
+ * Mostrar el mensaje en el template.
  
  El final del método `register_user` de `views.py` debería quedar así: 
  ```
