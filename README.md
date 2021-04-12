@@ -25,7 +25,7 @@ Como hoy cambiaremos el modelo de usuarios predeterminado de Django, habrá que 
 Esto significa eliminar todas las migraciones y la base de datos de sqlite. 
 
 Para esto tendrás que borrar la carpeta `todoapp/migrations`, `categorias/migrations` y el archivo `db.sqlite3`. 
-> Esto solo se hará hoy y al inicio de todo, nunca debería haber necesidad de borrar todo y empezar denuevo 
+> Esto solo se hará hoy y al inicio de todo, nunca debería haber necesidad de borrar todo y empezar denuevo. 
 
 ### [Parte 1: Crear usuarios]
 Para nuestra aplicación querremos que los usuarios tengan Nombre, Contraseña, Apodo, Mail y Pronombre. Un User de Django ya trae algunos de estos atributos, pero no todos. 
