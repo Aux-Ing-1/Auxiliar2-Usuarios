@@ -64,10 +64,10 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
        $ python manage.py makemigrations todoapp categorias
        $ python manage.py migrate
         ```
-       Con esto los cambios al modelo se reflejen en la base de datos. 
+       Con esto los cambios al modelo se reflejan en la base de datos. 
     *  Ahora puedes hacer `python manage.py runserver` para correr la app y al entrar a `127.0.0.1:8000/tareas` deberia poder ver el form de tareas. 
         > Como en el primer paso borramos todos los datos de la base de datos, ahora no tendrás categorías para agregar tus tareas. 
-        > Para arreglar esto, en la carpeta categorías de este repositorio hay un archivo .json` con catogrías listas para agregar. Guarda este archivo en la carpeta `categorias`. Para usar este archivo tendrás que hacer el siguiente comando: 
+        > Para arreglar esto, en la carpeta categorías de este repositorio hay un archivo `.json` con catogrías listas para agregar. Guarda este archivo en la carpeta `categorias`. Para usar este archivo tendrás que correr el siguiente comando: 
         
         >`python manage.py loaddata categorias/categorias.json` 
     
