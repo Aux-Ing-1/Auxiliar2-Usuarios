@@ -14,7 +14,7 @@ Un usuario está representado por un objeto de la clase User y sus atributos pri
 
 [Aquí](https://docs.djangoproject.com/en/2.2/ref/contrib/auth/#django.contrib.auth.models.User)  encuentras todos los atributos de la clase User.
 
-Hoy vamos a agegarle usuarios a nuestra app de Tareas para que cada uno tenga su propia lista de tareas.
+Hoy vamos a agregarle usuarios a nuestra app de Tareas para que cada uno tenga su propia lista de tareas.
 Para esto tendremos que __crear usuarios__, __loguearlos__ y __asignarle un usuario a cada tarea__!
 
 ![Pantallazo del resultado final de la app](vista_final.png)
@@ -31,7 +31,7 @@ Para esto tendrás que borrar la carpeta `todoapp/migrations`, `categorias/migra
 Para nuestra aplicación querremos que los usuarios tengan Nombre, Contraseña, Apodo, Mail y Pronombre. Un User de Django ya trae algunos de estos atributos, pero no todos. 
 Es por esto que vamos a crear nuestra propia clase User que heredará de AbstractUser y así podremos guardar todos los atributos que querramos. 
 
-AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Django y está diseñada para cuando queremos agregar mas información a los usuarios. 
+AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Django y está diseñada para cuando queremos agregar más información a los usuarios. 
 
 
 1. __Crear modelo User__: 
