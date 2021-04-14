@@ -36,7 +36,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
 
 1. __Crear modelo User__: 
     
-    * En `todoapp/models.py` agregaremos el modelo `User` que heredará de `AbstractUser` y le pondremos los atributos apodo y pronombre para tener mas información sobre le usuarie. Al hacer esto vamos tener acceso a los atributos base de User de Django y toda la funcionalidad para Autenticación. 
+    * En `todoapp/models.py` agregaremos el modelo `User` que heredará de `AbstractUser` y le pondremos los atributos apodo y pronombre para tener más información sobre le usuarie. Al hacer esto vamos tener acceso a los atributos base de User de Django y toda la funcionalidad para Autenticación. 
 
         > Importante! La clase User tiene que ser la primera clase que aparezca en el modelo. 
     
@@ -163,7 +163,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
    Cuando creamos el método `register_user` solo le indicamos que hiciera render del formulario. 
    Ahora queremos diferenciar entre una llamada GET (cuando cargamos la página) y una llamada POST (cuando enviamos un formulario).
    
-   Para esto vamos a editar `todolist/views.py` y diferenciar estos dos casos: 
+   Para esto vamos a editar `todoapp/views.py` y diferenciar estos dos casos: 
    ```python
    from django.http import HttpResponseRedirect
    def register_user(request):
@@ -201,7 +201,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
  4. __Prueba que el formulario esté funcionando__ y agrega cuentas. 
        
        Para comprobar que se crearon puedes hacer lo siguiente: 
-       * Editar `todolist/admin.py` y agregar 
+       * Editar `todoapp/admin.py` y agregar 
        ```
         from todoapp.models import User, Tarea
         from categorias.models import Categoria
