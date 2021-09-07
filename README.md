@@ -36,7 +36,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
 
 1. __Crear modelo User__: 
     
-    * En `todoapp/models.py` agregaremos el modelo `User` que heredará de `AbstractUser` y le pondremos los atributos apodo y pronombre para tener más información sobre le usuarie. Al hacer esto vamos tener acceso a los atributos base de User de Django y toda la funcionalidad para Autenticación. 
+    * En `todoapp/models.py` agregaremos el modelo `User` que heredará de `AbstractUser` y le pondremos los atributos apodo y pronombre para tener más información sobre le usuarie. Al hacer esto vamos a tener acceso a los atributos base de un User de Django y a toda la funcionalidad de autenticación. 
 
         > Importante! La clase User tiene que ser la primera clase que aparezca en el modelo. 
     
@@ -50,7 +50,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
        apodo = models.CharField(max_length=30)
             
         ```
-      > El pronombre será un CharField pero solo podrá ser alguna de las opciones definidas en la variable pronombres. El primer elemento del par será el valor del atributo, y el segundo valor del par será el valor en lenguaje natural. En este caso les llamaremos igual. 
+      > El pronombre será un CharField pero solo podrá ser alguna de las opciones definidas en la variable pronombres. El primer elemento del par será el valor del atributo, y el segundo elemnto del par será el valor en lenguaje natural. En este caso les llamaremos igual. 
       
     * Antes de hacer las migraciones tenemos que hacer un paso más. 
         Vamos a ir a `TODOproject/settings.py` y agregaremos esta línea: 
@@ -65,7 +65,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
        $ python manage.py migrate
         ```
        Con esto los cambios al modelo se reflejan en la base de datos. 
-    *  Ahora puedes hacer `python manage.py runserver` para correr la app y al entrar a `127.0.0.1:8000/tareas` deberia poder ver el form de tareas. 
+    *  Ahora puedes hacer `python manage.py runserver` para correr la app y al entrar a `127.0.0.1:8000/tareas` deberías ver el form de tareas. 
         > Como en el primer paso borramos todos los datos de la base de datos, ahora no tendrás categorías para agregar tus tareas. 
         > Para arreglar esto, en la carpeta categorías de este repositorio hay un archivo `.json` con catogrías listas para agregar. Guarda este archivo en la carpeta `categorias`. Para usar este archivo tendrás que correr el siguiente comando: 
         
@@ -76,7 +76,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
     Para crear un nuevo usuario crearemos una nueva URL que será `/register`. 
     Al entrar a esta URL habrá un formulario que, luego de llenarlo correctamente, creará un nuevo `User` y nos llevará a la página de inicio de la app. 
     
-    2.1 __Urls__
+    2.1 __URLs__
      
      Primero crearemos la URL en `todoapp/urls.py`, agregando la siguiente línea: 
      
@@ -217,10 +217,10 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
        ![vista admin con my_user](vista_myuser_admin.png)
 
  
-### [Parte 2: Login y logout]
+### [Parte 2: Login y Logout]
 Un **login** es un formulario donde los usuarios inician sesión.
 Mientras que **logout** es un botón o link por el cual los usuarios cierran sesión.
-Es importante que el login solo sea visible cuando los usuarios no han iniciado sesión y, en caso de que ya se haya iniciado sesión, deben ver un link para cerrar sesión (logout).
+Es importante que el login solo sea visible cuando los usuarios no han iniciado sesión y, en caso de que ya se haya iniciado sesión, debe haber un link para cerrar sesión (logout).
 
 Como el modelo User que implementamos hereda de AbstractUser, la autenticación será muy fácil de implementar en nuestro proyecto. 
 De hecho, antes de implementar cualquier cosa, nuestro proyecto ya tiene una variable `user` en los templates y en views tenemos `request.user`. 
@@ -262,9 +262,9 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
 
     Para hacer login tendremos una URL especial para esto (`/login`). El formulario de login será igual que los que creamos antes, pero solo pediremos nombre y contraseña. 
     
-    Para esto crearemos un formulario donde se inicia sesión, la url de login, y la view que nos permitirá hacer el login:
+    Para esto crearemos un formulario donde se inicia sesión, la URL de login, y la view que nos permitirá hacer el login:
     
-    2.1 __Urls__: Crear la URL _/login_ que cargará el método `login_user` en las views.  
+    2.1 __URLs__: Crear la URL _/login_ que cargará el método `login_user` en las views.  
     ```python
    path('login',views.login_user, name='login'),
     ```     
@@ -276,7 +276,7 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
            return render(request,"todoapp/login.html")  
    ```
    
-   2.3 __Templates__: Creamos el html del formulario, que tendrá nombre y contraseña. 
+   2.3 __Templates__: Creamos el HTML del formulario, que tendrá nombre y contraseña. 
    Para esto creamos un archivo `login.html` en la carpeta `todoapp/templates/todoapp`. 
    
    Hay que poner atención a lo que hay dentro de ```<form>``` porque ahí están los campos donde se piden los datos. 
@@ -313,7 +313,7 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
    
    Si enviamos el formulario (apretamos el botón) debería aparecer un error porque aun no le indicamos a la app qué hacer cuando enviamos el formulario. 
    
-   Para arreglar esto tenemos que editar `views.py` para que inicie sesión cuando el método sea POST, como muestra el paso siguiente. 
+   Para arreglar esto tenemos que editar `views.py` para que inicie sesión cuando el método sea POST, como se muestra en el paso siguiente. 
    
    2.4 __Autenticar y loguear el usuario__: 
    
@@ -350,10 +350,10 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
 3. __Logout__: 
 
     Para hacer logout no tendremos que llenar ningún formulario, sino que solo apretar el link y cerrar la sesión. 
-    Para lograr esto crearemos una url y una view que hará logout y luego redirigirá a la página de inicio. 
+    Para lograr esto crearemos una URL y una view que hará logout y luego redirigirá a la página de inicio. 
     
-    3.1 __Urls__:
-    Creamos la url `/logout` que cargará el método `logout_user` en las views y tiene como nombre 'logout'. 
+    3.1 __URLs__:
+    Creamos la URL `/logout` que cargará el método `logout_user` en las views y tiene como nombre 'logout'. 
      ```python
    path('logout',views.logout_user, name='logout'),
     ```
@@ -378,7 +378,7 @@ Lo que haremos ahora es mostrar la opción de hacer login o registrarse, si no h
    Al igual que con login, cuando agregamos el código `{% url 'logout' %}` a `href`, le estamos diciendo que busque una URL con el nombre 'logout'. 
    En este caso llamará a _/logout_. 
    
-### [Parte 3: Cada usuario tendrá sus Tareas]
+### [Parte 3: Cada Usuario tendrá sus Tareas]
 Para terminar, queremos que un usuario que está logueado solo vea las Tareas que fueron creadas por él. 
 Para esto tendremos los siguientes requisitos: 
 * Una Tarea creada por un usuario anónimo, solo se mostrará cuando el usuario sea anónimo. 
@@ -442,7 +442,7 @@ Finalmente vamos a modificar la view donde se cargan las Tareas para mostrar sol
     En el método `tareas()` de views.py creamos la variable `mis_tareas` que tomará todas las Tareas que luego mostraremos en el template. 
     Ahora, no queremos mostrar todas las Tareas sino que sólo las que pertenezcan al usuario. 
     
-    Para esto tendremos que cambiar la _query_ que haremos para cargar las Tareas. En el método `tareas` de `todoapp/views.py` hay que agregar esta condición al crear la variable `mis_tareas` 
+    Para esto tendremos que cambiar la _query_ que haremos para cargar las Tareas. En el método `tareas` de `todoapp/views.py` hay que agregar esta condición al crear la variable `mis_tareas` :
     
     ```python
    if request.user.is_authenticated:
@@ -451,11 +451,9 @@ Finalmente vamos a modificar la view donde se cargan las Tareas para mostrar sol
        mis_tareas = Tarea.objects.filter(owner=None)
    ```
    
-   
    En esta variación estamos revisando si el usuario inició sesión o no, con user.is_autenticated.
    Si el usuario inició sesión, entonces se filtrarán las Tareas tal que el owner sea ese usuario. 
-   En caso contrario, se buscarán las Tareas tal que el owner sea None.  
-   
+   En caso contrario, se buscarán las Tareas tal que el owner sea None.
 
 
 ### Conclusiones
