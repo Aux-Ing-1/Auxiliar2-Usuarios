@@ -1,5 +1,5 @@
 # Auxiliar 3: Django Users
-Hoy crearemos un sistema de usuarios para la applicación web de Tareas. 
+Hoy crearemos un sistema de usuarios para la aplicación de Tareas. 
 Si no tienes el código de la auxiliar anterior puedes hacer Fork de este repositorio y luego lo clonas en tu computador para empezar la actividad. 
 >Para ver como hacer Fork de un repositorio y clonarlo a tu computador te recomendamos leer los primeros pasos de la [auxiliar 1](https://github.com/Aux-Ing-1/Auxiliar1-GIT).
  
@@ -20,16 +20,16 @@ Para esto tendremos que __crear usuarios__, __loguearlos__ y __asignarle un usua
 ![Pantallazo del resultado final de la app](vista_final.png)
 
 ## Actividad
-### [Parte 0: Borrar la base de datos]
+### [Parte 0: Borrar la Base de Datos]
 Como hoy cambiaremos el modelo de usuarios predeterminado de Django, habrá que comenzar la base de datos desde 0. 
 Esto significa eliminar todas las migraciones y la base de datos de sqlite. 
 
 Para esto tendrás que borrar la carpeta `todoapp/migrations`, `categorias/migrations` y el archivo `db.sqlite3`. 
 > Esto solo se hará hoy y al inicio de todo, nunca debería haber necesidad de borrar todo y empezar denuevo. 
 
-### [Parte 1: Crear usuarios]
-Para nuestra aplicación querremos que los usuarios tengan Nombre, Contraseña, Apodo, Mail y Pronombre. Un User de Django ya trae algunos de estos atributos, pero no todos. 
-Es por esto que vamos a crear nuestra propia clase User que heredará de AbstractUser y así podremos guardar todos los atributos que querramos. 
+### [Parte 1: Crear Usuarios]
+Para nuestra aplicación queremos que los usuarios tengan Nombre, Contraseña, Apodo, Mail y Pronombre. Un User de Django ya trae algunos de estos atributos, pero no todos. 
+Es por esto que vamos a crear nuestra propia clase User que heredará de AbstractUser y así podremos guardar todos los atributos que queramos. 
 
 AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Django y está diseñada para cuando queremos agregar más información a los usuarios. 
 
