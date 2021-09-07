@@ -145,7 +145,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
         </html>
     ```
 
-    __¿Qué hay en este código html?__ 
+    __¿Qué hay en este código HTML?__ 
     
     Lo mas importante por ahora es el formulario que se crea con la etiqueta ```<form>```. 
     Todo lo que está dentro de form serán los campos que tendremos que llenar para crear un usuario. 
