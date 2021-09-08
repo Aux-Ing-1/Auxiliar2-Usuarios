@@ -152,7 +152,7 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
     Cada "campo" está formado por un ```<label>``` y un ```<input>``` (este último es donde ingresamos los datos). 
     Es importante que para la contraseña el input tenga type `password` y que para el correo tenga type `email`. 
     
-    * Ahora si hacemos ```python manage.py runserver``` e ingresamos a `127.0.0.1/register` deberíamos ver el formulario de registro. 
+    * Ahora si hacemos ```python manage.py runserver``` e ingresamos a `127.0.0.1:8000/register` deberíamos ver el formulario de registro. 
    
    ![Vista registro](vista-registro.png)
    
