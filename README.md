@@ -4,7 +4,7 @@ Si no tienes el código de la auxiliar anterior puedes hacer Fork de este reposi
 >Para ver como hacer Fork de un repositorio y clonarlo a tu computador te recomendamos leer los primeros pasos de la [auxiliar 1](https://github.com/Aux-Ing-1/Auxiliar1-GIT).
  
 ## Librería Auth
-Django posee su propio sistema de usuarios, el cual esta incluido en la [librería Auth](https://docs.djangoproject.com/en/2.2/topics/auth/). 
+Django posee su propio sistema de usuarios, el cual esta incluido en la [librería Auth](https://docs.djangoproject.com/en/3.2/topics/auth/). 
 Un usuario está representado por un objeto de la clase User y sus atributos principales son:
 * username
 * password
@@ -12,7 +12,7 @@ Un usuario está representado por un objeto de la clase User y sus atributos pri
 * first_name
 * last_name
 
-[Aquí](https://docs.djangoproject.com/en/2.2/ref/contrib/auth/#django.contrib.auth.models.User) encuentras todos los atributos de la clase User.
+[Aquí](https://docs.djangoproject.com/en/3.2/ref/contrib/auth/#django.contrib.auth.models.User) encuentras todos los atributos de la clase User.
 
 Hoy vamos a agregarle usuarios a nuestra app de Tareas para que cada uno tenga su propia lista de tareas.
 Para esto tendremos que __crear usuarios__, __loguearlos__ y __asignarle un usuario a cada tarea__!
