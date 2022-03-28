@@ -2,6 +2,14 @@
 Hoy crearemos un sistema de usuarios para la aplicación de Tareas. 
 Si no tienes el código de la auxiliar anterior puedes hacer Fork de este repositorio y luego lo clonas en tu computador para empezar la actividad. 
 >Para ver como hacer Fork de un repositorio y clonarlo a tu computador te recomendamos leer los primeros pasos de la [auxiliar 1](https://github.com/Aux-Ing-1/Auxiliar1-GIT).
+
+>Deben correr el proyecto en un nuevo ambiente virtual utilizando el requirements.txt que tiene este proyecto.
+
+1. `python3 -m venv myvenv` en Linux o `python -m venv myvenv` en Windows para crear el nuevo ambiente virtual.
+2. `source myvenv/bin/activate` en Linux o `myvenv\Scripts\activate` en Windows para iniciar el ambiente virtual.
+3. `python -m pip install --upgrade pip`
+4. `pip install -r requirements.txt`
+
  
 ## Librería Auth
 Django posee su propio sistema de usuarios, el cual esta incluido en la [librería Auth](https://docs.djangoproject.com/en/3.2/topics/auth/). 
