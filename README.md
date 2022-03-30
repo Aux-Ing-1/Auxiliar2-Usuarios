@@ -503,7 +503,7 @@ Queremos ver un mensaje así luego de crear un usuario:
     elif request.method == 'POST':
         ...
         ...
-        user = User.objects.create_user(username=nombre, password=contraseña,email=mail)
+        user = User.objects.create_user(username=nombre, password=contraseña, email=mail, apodo=apodo, pronombre=pronombre)
         messages.success(request, 'Se creó el usuario para ' + user.apodo)
         return HttpResponseRedirect('/tareas')
  ```
