@@ -53,9 +53,9 @@ AbstractUser es una clase que trae toda la funcionalidad de los usuarios de Djan
       from django.contrib.auth.models import AbstractUser
         
       class User(AbstractUser):
-       pronombres = [('La','La'),('El','El'), ('Le','Le'),('Otro','Otro')]
-       pronombre = models.CharField(max_length=5,choices=pronombres)
-       apodo = models.CharField(max_length=30)
+          pronombres = [('La','La'),('El','El'), ('Le','Le'),('Otro','Otro')]
+          pronombre = models.CharField(max_length=5,choices=pronombres)
+          apodo = models.CharField(max_length=30)
             
         ```
       > El pronombre será un CharField pero solo podrá ser alguna de las opciones definidas en la variable pronombres. El primer elemento del par será el valor del atributo, y el segundo elemnto del par será el valor en lenguaje natural. En este caso les llamaremos igual. 
