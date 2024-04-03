@@ -1,4 +1,4 @@
-# Auxiliar 3: Django Users
+# Auxiliar 2: Django Users
 Hoy crearemos un sistema de usuarios para la aplicación de Tareas. Empieza haciendo un Fork de este repositorio y luego clonarlo en tu computador para empezar la actividad. 
 >Para ver como hacer Fork de un repositorio y clonarlo a tu computador te recomendamos leer los primeros pasos de la [auxiliar 1](https://github.com/Aux-Ing-1/Auxiliar1-GIT).
 
